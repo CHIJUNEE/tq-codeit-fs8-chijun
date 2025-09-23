@@ -31,6 +31,7 @@ export default function Home() {
         <TodoForm />
         {/* <TodoForm loadTodos={loadTodos} /> */}
         <h2 className="text-2xl font-bold mb-4">할 일 목록</h2>
+
         <TodoList />
       </div>
     </div>

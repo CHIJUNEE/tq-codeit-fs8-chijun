@@ -13,6 +13,7 @@ export default function TodoList() {
   } = useQuery({
     queryKey: ["todos"],
     queryFn: fetchTodos,
+    // staleTime: 5000,
   });
 
   if (isLoading) {

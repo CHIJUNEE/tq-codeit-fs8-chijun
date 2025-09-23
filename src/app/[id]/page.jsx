@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { fetchTodo, fetchTodos } from "@/api/todos";
 import { useParams, useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function TodoDetailPage() {
   const { id } = useParams();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const {
     data: todo,
     isPending: isLoading,
@@ -15,6 +16,7 @@ export default function TodoDetailPage() {
   } = useQuery({
     queryKey: ["todo", id],
     queryFn: () => fetchTodo(id),
+    gcTime: 10 * 60 * 1000,
   });
 
   // useEffect(() => {
