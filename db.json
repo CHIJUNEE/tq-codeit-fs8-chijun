@@ -7,7 +7,7 @@
     },
     {
       "title": "json-server 데이터2",
-      "completed": false,
+      "completed": true,
       "id": 2
     },
     {
@@ -22,7 +22,7 @@
     },
     {
       "title": "aaaabbbb",
-      "completed": false,
+      "completed": true,
       "id": 5
     },
     {
