@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function TodoForm() {
   const [title, setTitle] = useState("");
 
-  const todoAdd = useMutation({
+  const { mutate: mutateAddTodo, isPending: isAdding } = useMutation({
     mutationFn: addTodo,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todos"] });
@@ -19,7 +19,8 @@ export default function TodoForm() {
   const queryClient = useQueryClient();
   const handleAddTodo = async (title) => {
     try {
-      todoAdd.mutate(title);
+      mutateAddTodo(title);
+      // todoAdd.mutate(title);
       // await queryClient.invalidateQueries({ queryKey: ["todos"] });
       // TODO: 할 일 추가 후 목록 다시 불러오기
     } catch (err) {
@@ -51,7 +52,7 @@ export default function TodoForm() {
           className="flex-grow p-2 border"
         />
         <button type="submit" className="px-4 py-2 bg-blue-500 text-white">
-          추가
+          {isAdding ? "...추가중" : "추가"}
         </button>
       </div>
     </form>
