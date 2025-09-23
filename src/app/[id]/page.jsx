@@ -3,31 +3,25 @@
 import { useEffect, useState } from "react";
 import { fetchTodo, fetchTodos } from "@/api/todos";
 import { useParams, useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 
 export default function TodoDetailPage() {
   const { id } = useParams();
   const router = useRouter();
+  const {
+    data: todo,
+    isPending: isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["todo", id],
+    queryFn: () => fetchTodo(id),
+  });
 
-  const [todo, setTodo] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // useEffect(() => {
+  //   const fetchTodoDetail = async () => {};
 
-  useEffect(() => {
-    const fetchTodoDetail = async () => {
-      try {
-        setIsLoading(true);
-        const data = await fetchTodo(id);
-        setTodo(data);
-      } catch (err) {
-        console.error("할 일 상세 정보를 가져오는 중 오류 발생:", err);
-        setError("할 일 상세 정보를 가져오는데 실패했습니다.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchTodoDetail();
-  }, [id]);
+  //   fetchTodoDetail();
+  // }, [id]);
 
   if (isLoading) {
     return (
@@ -37,9 +31,7 @@ export default function TodoDetailPage() {
 
   if (error) {
     return (
-      <div className="container mx-auto px-4 py-8 text-center text-red-500">
-        {error}
-      </div>
+      <div className="container mx-auto px-4 py-8 text-center text-red-500"></div>
     );
   }
 

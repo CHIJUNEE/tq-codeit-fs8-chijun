@@ -3,8 +3,29 @@
 import { useState, useEffect } from "react";
 import TodoItem from "@/app/_components/TodoItem";
 import { fetchTodos } from "@/api/todos";
+import { useQuery } from "@tanstack/react-query";
 
-export default function TodoList({ todos }) {
+export default function TodoList() {
+  const {
+    data: todos,
+    isPending: isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["todos"],
+    queryFn: fetchTodos,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">로딩 중...</div>
+    );
+  } else if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center text-red-500">
+        {error}
+      </div>
+    );
+  }
   return (
     <div className="border">
       {todos.length === 0 ? (
