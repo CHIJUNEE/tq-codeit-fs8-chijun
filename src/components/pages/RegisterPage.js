@@ -26,7 +26,15 @@ function RegisterPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+    fetch(`/api/link-service/users`, {
+      method: "POST",
+      body: JSON.stringify({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        passwordRepeat: values.passwordRepeat,
+      }),
+    });
     // TODO: 회원가입 처리
     // 1. fetch 를 사용하여 회원가입 요청을 보냅니다.
     // 2. 성공 시 응답 데이터를 확인합니다.
