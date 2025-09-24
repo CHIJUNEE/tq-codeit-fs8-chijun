@@ -25,6 +25,15 @@ function LoginPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    const response = await fetch(
+      `https://learn.codeit.kr/api/link-service/auth/login`,
+      {
+        method: "POST",
+        headers: { "Content- Type": "application/json" },
+        body: {},
+      }
+    );
     // TODO: 로그인 처리
     // 1. fetch 를 사용하여 로그인 요청을 보냅니다.
     // 2. 성공 시 Application 에 쿠키 내 토큰 저장 여부를 확인합니다.

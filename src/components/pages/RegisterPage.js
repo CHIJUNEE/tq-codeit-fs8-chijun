@@ -20,13 +20,6 @@ function RegisterPage() {
     passwordRepeat: "",
   });
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  }
   const [errors, setErrors] = useState({});
 
   function validateField(name, value) {
@@ -62,28 +55,20 @@ function RegisterPage() {
     setError("");
     setIsLoading(true);
     try {
-      const formData = new FormData();
-      formData.append("name", values.name);
-      formData.append("email", values.email);
-      formData.append("password", values.password);
-      formData.append("passwordRepeat", values.passwordRepeat);
-      const response = await fetch(
-        `https://learn.codeit.kr/api/link-service/users`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(data?.message || "회원가입에 실패했습니다.");
-      }
-      console.log("회원가입 성공:", data);
+      await fetch(`https://learn.codeit.kr/api/link-service/users`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        }),
+      });
+
+      alert("회원가입 성공");
       router.push("/login");
     } catch (err) {
-      setError(
-        err.message || "문제가 발생했습니다. 잠시 후 다시 시도해주세요."
-      );
+      setError(err.message || "문제가 발생했습니다. 회원가입에 실패했습니다.");
     } finally {
       setIsLoading(false);
     }
